@@ -17,7 +17,14 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// home controller
 Route::get('/home', 'HomeController@index')->name('home');
+<<<<<<< HEAD
 Route::resource('/group', 'GroupController');
 Route::get('/join/{id}', 'JoinController@JoinGroup');
 Route::get('/leave/{id}', 'JoinController@LeaveGroup');
+=======
+
+// profile controller
+Route::resource('/profile', 'ProfileController');
+>>>>>>> c0e7329cf7301ad857a446c777328cc5dac97600
