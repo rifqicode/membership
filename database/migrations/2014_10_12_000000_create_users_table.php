@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
+            $table->string('group')->default('none');
             $table->integer('verification')->default('0');
             $table->string('code')->default('NULL');
             $table->rememberToken();

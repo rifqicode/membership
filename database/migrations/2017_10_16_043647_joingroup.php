@@ -13,7 +13,7 @@ class Joingroup extends Migration
      */
     public function up()
     {
-        Schema::create('joingroup', function (Blueprint $table) {
+        Schema::create('joingroups', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idUser');
             $table->integer('idGroup');
@@ -27,6 +27,6 @@ class Joingroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('joingroup');
+        Schema::dropIfExists('joingroups');
     }
 }

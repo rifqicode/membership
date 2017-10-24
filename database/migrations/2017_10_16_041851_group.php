@@ -13,7 +13,7 @@ class Group extends Migration
      */
     public function up()
     {
-      Schema::create('group', function(Blueprint $table){
+      Schema::create('groups', function(Blueprint $table){
         $table->increments('id');
         $table->string('groupName');
         $table->timestamps();
@@ -27,6 +27,6 @@ class Group extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group');
+        Schema::dropIfExists('groups');
     }
 }

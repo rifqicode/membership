@@ -18,3 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('/group', 'GroupController');
+Route::get('/join/{id}', 'JoinController@JoinGroup');
+Route::get('/leave/{id}', 'JoinController@LeaveGroup');

@@ -26,11 +26,18 @@
      <!-- sidebar menu: : style can be found in sidebar.less -->
      <ul class="sidebar-menu">
        <li class="header">MAIN NAVIGATION</li>
-       <li class="active">
+       <li id="home">
          <a href="{{ route('home') }}">
            <i class="fa fa-th"></i> <span>Dashboard</span>
            <span class="pull-right-container">
              <small class="label pull-right bg-green">new</small>
+           </span>
+         </a>
+       </li>
+       <li id="group">
+         <a href="/group">
+           <i class="fa fa-users"></i> <span>Group</span>
+           <span class="pull-right-container">
            </span>
          </a>
        </li>
