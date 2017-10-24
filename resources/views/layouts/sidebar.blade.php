@@ -34,6 +34,14 @@
            </span>
          </a>
        </li>
+       <li>
+         <a href="/profile">
+           <i class="fa fa-user"></i> <span>Profile</span>
+           <span class="pull-right-container">
+             <small class="label pull-right bg-red">complete your data</small>
+           </span>
+         </a>
+       </li>
      </ul>
    </section>
    <!-- /.sidebar -->

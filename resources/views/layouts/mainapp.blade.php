@@ -34,12 +34,14 @@
     <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <body class="hold-transition skin-purple-light sidebar-mini">
         @include('layouts.navbar')
-
+        @include('flash::message')
         @include('layouts.sidebar')
         @yield('content')
+
 
 
     <!-- Scripts -->
@@ -51,6 +53,9 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <script>
+      $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
     </script>
     <!-- Bootstrap 3.3.6 -->
     <script src="/js/bootstrap.min.js"></script>
