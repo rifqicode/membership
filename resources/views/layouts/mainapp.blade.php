@@ -34,12 +34,9 @@
     <!-- Daterange picker -->
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
     <!-- bootstrap wysihtml5 - text editor -->
-<<<<<<< HEAD
     <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-=======
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
->>>>>>> c0e7329cf7301ad857a446c777328cc5dac97600
 </head>
 <body class="hold-transition skin-purple-light sidebar-mini">
         @include('layouts.navbar')
@@ -59,13 +56,9 @@
     <script>
       $.widget.bridge('uibutton', $.ui.button);
     </script>
-<<<<<<< HEAD
-
-=======
     <script>
       $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-    </script>
->>>>>>> c0e7329cf7301ad857a446c777328cc5dac97600
+    </script> 
     <!-- Bootstrap 3.3.6 -->
     <script src="{{asset('/js/bootstrap.min.js')}}"></script>
 

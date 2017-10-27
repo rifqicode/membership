@@ -48,7 +48,7 @@
                           $haha = json_decode(Auth::user()->group);
                         @endphp
                         @if (in_array($g->id, $haha))
-                          <td>Already Joinned <a href="leave/{{ $g->id }}" class="btn btn-danger">Leave</a></td>
+                          <td><a href="leave/{{ $g->id }}" class="btn btn-danger">Leave</a></td>
                         @else
                           <td><a href="join/{{ $g->id }}" class="btn btn-primary">Join</a></td>
                         @endif

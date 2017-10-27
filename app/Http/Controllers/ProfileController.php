@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Detail_users;
+use App\User;
 use Auth;
 use Session;
 
@@ -21,9 +22,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-      Session::flash('message', 'This is a message!');
-      Session::flash('alert-class', 'alert-danger');
-        return view('profile.index');
+        $iduser = Auth::user()->id;
+        $datauser = Detail_users::findId_Users($iduser);
+        return view('profile.index')->with('data', $datauser);
     }
 
     /**
@@ -58,6 +59,7 @@ class ProfileController extends Controller
           $create->address = $request->input('address');
           $create->contact = $request->input('contact');
           $create->save();
+          return redirect('/profile');
 
         } else {
           $update = $find;
@@ -66,6 +68,7 @@ class ProfileController extends Controller
           $update->address = $request->input('address');
           $update->contact = $request->input('contact');
           $update->update();
+          return redirect('/profile');
         }
 
 

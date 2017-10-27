@@ -34,21 +34,24 @@
            </span>
          </a>
        </li>
-<<<<<<< HEAD
-       <li id="group">
-         <a href="/group">
-           <i class="fa fa-users"></i> <span>Group</span>
-           <span class="pull-right-container">
-=======
-       <li>
+
+       <li id="profile">
          <a href="/profile">
            <i class="fa fa-user"></i> <span>Profile</span>
            <span class="pull-right-container">
              <small class="label pull-right bg-red">complete your data</small>
->>>>>>> c0e7329cf7301ad857a446c777328cc5dac97600
            </span>
          </a>
        </li>
+
+       <li id="group">
+         <a href="/group">
+           <i class="fa fa-user"></i> <span>Group</span>
+           <span class="pull-right-container">
+           </span>
+         </a>
+       </li>
+
      </ul>
    </section>
    <!-- /.sidebar -->

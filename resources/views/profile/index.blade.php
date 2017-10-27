@@ -23,6 +23,7 @@
          <!-- Profile Image -->
          <div class="box box-primary">
            <div class="box-body box-profile">
+            @foreach($data as $d)
              <img class="profile-user-img img-responsive img-circle" src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
 
              <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
@@ -210,6 +211,7 @@
              <div class="tab-pane" id="settings">
                <form class="form-horizontal" method="post" action="/profile">
                  {{ csrf_field() }}
+
                  <div class="form-group">
                    <label for="inputName" class="col-sm-2 control-label">Name</label>
 
@@ -222,7 +224,7 @@
                    <label for="inputName" class="col-sm-2 control-label">Full Name</label>
 
                    <div class="col-sm-10">
-                     <input type="text" class="form-control" name="full_name" id="inputFullname" placeholder="">
+                     <input type="text" class="form-control" name="full_name" id="inputFullname" placeholder="{{ $d->full_name }}">
                    </div>
                  </div>
 
@@ -230,7 +232,11 @@
                   <label for="inputBirthdate" class="col-sm-2 control-label">Birth Date</label>
 
                   <div class="col-sm-10">
-                    <input type="date" class="form-control" name="birthdate" id="inputBirthdate" placeholder="">
+                    @if(empty($d->birthdate))
+                    <input type="date" class="form-control" name="birthdate" id="inputBirthdate" >
+                    @else
+                    <input type="date" class="form-control" name="birthdate" id="inputBirthdate"value="{{ $d->birthdate }}" disabled >
+                    @endif
                   </div>
                 </div>
 
@@ -238,7 +244,7 @@
                   <label for="InputAddress" class="col-sm-2 control-label">Address</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="address" id="inputAddress" placeholder="">
+                    <input type="text" class="form-control" name="address" id="inputAddress" placeholder="{{ $d->address }}">
                   </div>
                 </div>
 
@@ -246,7 +252,7 @@
                   <label for="InputContact" class="col-sm-2 control-label">Contact</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="contact" id="inputContact" placeholder="">
+                    <input type="text" class="form-control" name="contact" id="inputContact" placeholder="{{ $d->contact }}">
                   </div>
                 </div>
 
@@ -258,6 +264,7 @@
                  </div>
                </form>
              </div>
+            @endforeach
              <!-- /.tab-pane -->
            </div>
            <!-- /.tab-content -->
