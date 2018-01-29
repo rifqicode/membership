@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Detail_users;
 use App\User;
 use Auth;
+use DB;
 use Session;
 
 class ProfileController extends Controller
@@ -48,10 +49,18 @@ class ProfileController extends Controller
         $user = Auth::user();
         $iduser = $user->id;
 
-        $find = Detail_users::Find($iduser);
+        $find = Detail_users::findId_Users($iduser);
+
+        // verification
+
+
 
         if (empty($find))
         {
+
+          // $user->verification = 1;
+          // $user->update();
+
           $create = new Detail_users;
           $create->id_users = $iduser;
           $create->full_name = $request->input('full_name');
@@ -62,12 +71,25 @@ class ProfileController extends Controller
           return redirect('/profile');
 
         } else {
-          $update = $find;
-          $update->full_name = $request->input('full_name');
-          $update->birthdate = $request->input('birthdate');
-          $update->address = $request->input('address');
-          $update->contact = $request->input('contact');
-          $update->update();
+
+          $findBirthdate = Detail_users::findId_Users($iduser);
+
+          foreach ($findBirthdate as $key) {
+            $birthdate = $key->birthdate;
+
+          }
+          $update = DB::table('detail_users')
+                    ->where('id_users' , $iduser)
+                    ->update(['full_name' => $request->input('full_name'),
+                             'birthdate'  => $birthdate,
+                             'address'    => $request->input('address'),
+                             'contact'    => $request->input('contact')]);
+
+          // $update->full_name = $request->input('full_name');
+          // $update->birthdate = $request->input('birthdate');
+          // $update->address = $request->input('address');
+          // $update->contact = $request->input('contact');
+          // $update->update();
           return redirect('/profile');
         }
 

@@ -39,14 +39,17 @@
          <a href="/profile">
            <i class="fa fa-user"></i> <span>Profile</span>
            <span class="pull-right-container">
+             @if(Auth::user()->verification == 1)
+             @else
              <small class="label pull-right bg-red">complete your data</small>
+             @endif
            </span>
          </a>
        </li>
 
        <li id="group">
          <a href="/group">
-           <i class="fa fa-user"></i> <span>Group</span>
+           <i class="fa fa-users"></i> <span>Group</span>
            <span class="pull-right-container">
            </span>
          </a>

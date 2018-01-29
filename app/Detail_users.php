@@ -20,4 +20,5 @@ class Detail_users extends Model
       return $find;
     }
 
+
 }
