@@ -24,7 +24,7 @@ class ProfileController extends Controller
     public function index()
     {
         $iduser = Auth::user()->id;
-        $datauser = Detail_users::findId_Users($iduser);
+        $datauser = Detail_users::findUsersById($iduser);
         return view('profile.index')->with('data', $datauser);
     }
 
@@ -49,18 +49,13 @@ class ProfileController extends Controller
         $user = Auth::user();
         $iduser = $user->id;
 
-        $find = Detail_users::findId_Users($iduser);
+        $find = Detail_users::findUsersById($iduser);
 
         // verification
-
-
-
-        if (empty($find))
+        if (sizeof($find) == 0)
         {
-
           // $user->verification = 1;
           // $user->update();
-
           $create = new Detail_users;
           $create->id_users = $iduser;
           $create->full_name = $request->input('full_name');
@@ -74,10 +69,11 @@ class ProfileController extends Controller
 
           $findBirthdate = Detail_users::findId_Users($iduser);
 
+          return $findBirthdate;
           foreach ($findBirthdate as $key) {
             $birthdate = $key->birthdate;
-
           }
+
           $update = DB::table('detail_users')
                     ->where('id_users' , $iduser)
                     ->update(['full_name' => $request->input('full_name'),
@@ -85,11 +81,6 @@ class ProfileController extends Controller
                              'address'    => $request->input('address'),
                              'contact'    => $request->input('contact')]);
 
-          // $update->full_name = $request->input('full_name');
-          // $update->birthdate = $request->input('birthdate');
-          // $update->address = $request->input('address');
-          // $update->contact = $request->input('contact');
-          // $update->update();
           return redirect('/profile');
         }
 

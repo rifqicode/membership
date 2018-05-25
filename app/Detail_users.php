@@ -14,7 +14,7 @@ class Detail_users extends Model
     //     return $this->hasOne('App\User');
     // }
 
-    public static function findId_Users($id)
+    public static function findUsersById($id)
     {
       $find = Detail_users::select('*')->where('id_users', '=', $id)->get();
       return $find;
