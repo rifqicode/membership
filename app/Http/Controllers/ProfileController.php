@@ -7,7 +7,6 @@ use App\Detail_users;
 use App\User;
 use Auth;
 use DB;
-use Session;
 
 class ProfileController extends Controller
 {
@@ -24,8 +23,10 @@ class ProfileController extends Controller
     public function index()
     {
         $iduser = Auth::user()->id;
-        $datauser = Detail_users::findUsersById($iduser);
-        return view('profile.index')->with('data', $datauser);
+        $data = User::getUsersWithDetail($iduser);
+        return $data;
+        // $datauser = Detail_users::findUsersById($iduser);
+        // return view('profile.index')->with('data', $datauser);
     }
 
     /**

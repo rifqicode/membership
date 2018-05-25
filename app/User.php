@@ -27,4 +27,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function detailUsers()
+    {
+       return $this->hasOne('App\Detail_users');
+    }
+
+    public static function getUsersWithDetail($param)
+    {
+      return User::with('detailUsers')->get();
+    }
+
 }

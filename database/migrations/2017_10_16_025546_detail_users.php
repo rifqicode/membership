@@ -15,13 +15,16 @@ class DetailUsers extends Migration
     {
         Schema::create('detail_users', function(Blueprint $table){
           $table->increments('id');
-          $table->integer('id_users');
+          $table->unsignedInteger('user_id');
           $table->string('image')->default('default.jpg');
           $table->string('full_name');
-          $table->string('birthdate');
+          $table->date('birthdate');
           $table->string('address');
           $table->string('contact');
           $table->timestamps();
+
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

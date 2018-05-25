@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Joingroup extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class Joingroup extends Migration
      */
     public function up()
     {
-        Schema::create('joingroups', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('group_id');
+            $table->string('proof')->default('default.jpg');
+            $table->string('text');
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
     }
 
@@ -30,6 +31,6 @@ class Joingroup extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('joingroups');
+        Schema::dropIfExists('posts');
     }
 }

@@ -9,10 +9,10 @@ class Detail_users extends Model
 {
 
 
-    //   public function id_users()
-    // {
-    //     return $this->hasOne('App\User');
-    // }
+    public function users()
+    {
+        return $this->belongsTo('App\User');
+    }
 
     public static function findUsersById($id)
     {
