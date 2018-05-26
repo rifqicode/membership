@@ -93,7 +93,7 @@
                   </ul>
 
                 @foreach ($key->comment as $comment)
-                  <div class="user-block body-comment">
+                  <div class="user-block body-post">
                           <span class="username"> {{ $comment->user["name"] }} </span>
                          <span class="description">{{ $comment->text }}</span>
                    </div>

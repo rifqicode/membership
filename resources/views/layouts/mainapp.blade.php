@@ -43,16 +43,20 @@
         @include('flash::message')
         @include('layouts.sidebar')
         @yield('content')
-
+</body>
 
 
     <!-- Scripts -->
 
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <script src="{{ asset('js/app.js') }}"></script>
     <!-- jQuery 2.2.3 -->
     <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
@@ -104,8 +108,6 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('/js/demo.js')}}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
 
     <!-- Setting active sidebar -->
     <script type="text/javascript">
