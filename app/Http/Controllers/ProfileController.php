@@ -29,7 +29,7 @@ class ProfileController extends Controller
         $iduser = Auth::user()->id;
         $datauser = Detail_users::findUsersById($iduser);
 
-        $datapost = Post::with('user:id,name' , 'comment')->orderBy('created_at' , 'DESC')->get();
+        $datapost = Post::where('user_id' , $iduser)->with('user:id,name' , 'comment.user')->orderBy('created_at' , 'DESC')->get();
         return view('profile.index' , compact('datauser' , 'datapost'));
 
     }

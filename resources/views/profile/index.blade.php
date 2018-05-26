@@ -59,7 +59,7 @@
            <div class="tab-content">
              <div class="active tab-pane" id="activity">
                <!-- Post -->
-               <div class="post">
+               <div class="post" id="post">
 
                  <div class="user-block">
                    <form class="form-horizontal" action="{{ route('postCreate') }}" method="POST">
@@ -76,13 +76,12 @@
                  </div>
 
                  @foreach ($datapost as $key)
-                 <div class="user-block">
+                 <div class="user-block body-post">
                     <img class="img-circle img-bordered-sm" src="/img/user1-128x128.jpg" alt="user-image">
                           <span class="username">
                             <a href="#"> {{ $key->user["name"] }} </a>
                           </span>
                         <span class="description"> {{ $key->text }}</span>
-                      {{-- @endforeach --}}
                   </div>
                   <!-- /.user-block -->
                   <p>
@@ -90,10 +89,17 @@
                   </p>
                   <ul class="list-inline">
                       <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </a></li>
-                    <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>5</a></li>
+                      <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>5</a></li>
                   </ul>
 
-                  <input class="form-control input-sm" type="text" placeholder="Type a comment">
+                @foreach ($key->comment as $comment)
+                  <div class="user-block body-comment">
+                          <span class="username"> {{ $comment->user["name"] }} </span>
+                         <span class="description">{{ $comment->text }}</span>
+                   </div>
+                 @endforeach
+
+                  <input class="form-control input-sm" onchange="creatingComments({{ $key->id }})" type="text" placeholder="Type a comment">
                   <br>
                   @endforeach
 
@@ -209,5 +215,12 @@
 
    </section>
    <!-- /.content -->
+
+   <script type="text/javascript">
+      function creatingComments(param){
+          alert(param);
+       }
+   </script>
+
  </div>
 @endsection

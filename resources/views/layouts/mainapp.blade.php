@@ -47,6 +47,7 @@
 
 
     <!-- Scripts -->
+
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
     <!-- jQuery 2.2.3 -->
     <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
@@ -102,6 +103,9 @@
 
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('/js/demo.js')}}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
 
     <!-- Setting active sidebar -->
     <script type="text/javascript">
