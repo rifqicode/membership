@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
-<body class="hold-transition skin-purple-light sidebar-mini">
+<body class="hold-transition fixed skin-purple-light sidebar-mini">
         @include('layouts.navbar')
         @include('flash::message')
         @include('layouts.sidebar')

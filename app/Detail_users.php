@@ -16,7 +16,7 @@ class Detail_users extends Model
 
     public static function findUsersById($id)
     {
-      $find = Detail_users::select('*')->where('id_users', '=', $id)->get();
+      $find = Detail_users::select('*')->where('user_id', '=', $id)->get();
       return $find;
     }
 

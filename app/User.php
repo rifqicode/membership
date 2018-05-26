@@ -32,6 +32,16 @@ class User extends Authenticatable
        return $this->hasOne('App\Detail_users');
     }
 
+    public function post()
+    {
+       return $this->hasMany('App\Post');
+    }
+
+    public function comment()
+    {
+      return $this->hasMany('App\Comment');
+    }
+
     public static function getUsersWithDetail($param)
     {
       return User::with('detailUsers')->get();

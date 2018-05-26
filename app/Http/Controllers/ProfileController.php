@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+
 use App\Detail_users;
 use App\User;
+use App\Post;
+
 use Auth;
 use DB;
 
@@ -23,10 +27,11 @@ class ProfileController extends Controller
     public function index()
     {
         $iduser = Auth::user()->id;
-        $data = User::getUsersWithDetail($iduser);
-        return $data;
-        // $datauser = Detail_users::findUsersById($iduser);
-        // return view('profile.index')->with('data', $datauser);
+        $datauser = Detail_users::findUsersById($iduser);
+
+        $datapost = Post::with('user:id,name' , 'comment')->orderBy('created_at' , 'DESC')->get();
+        return view('profile.index' , compact('datauser' , 'datapost'));
+
     }
 
     /**

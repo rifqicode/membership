@@ -24,6 +24,8 @@ Route::resource('/group', 'GroupController');
 Route::get('/join/{id}', 'JoinController@JoinGroup');
 Route::get('/leave/{id}', 'JoinController@LeaveGroup');
 
+// posting controller
+Route::post('/post/create' , 'PostingController@create')->name('postCreate');
 
 // profile controller
 Route::resource('/profile', 'ProfileController');
