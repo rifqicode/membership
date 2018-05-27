@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Post;
+use Auth;
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +26,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+      $iduser = Auth::user()->id;
+      $datapost = Post::with('user:id,name' , 'comment.user')->orderBy('created_at' , 'DESC')->get();
+      return view('home')->with('datapost', $datapost);
+    }
+
+    public function craetePost(Request $request)
+    {
+      $usersId = Auth::user()->id;
+      $post = new Post;
+      $post->user_id = $usersId;
+      $post->text = $request->input('text');
+      $post->updated_at = NULL;
+      $post->save();
+
+      return redirect('/home');
     }
 }
