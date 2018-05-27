@@ -26,6 +26,7 @@ Route::get('/leave/{id}', 'JoinController@LeaveGroup');
 
 // posting controller
 Route::post('/post/create' , 'PostingController@create')->name('postCreate');
+Route::post('/comments/create' , 'CommentController@createComment')->name('commentCreate');
 
 // profile controller
 Route::resource('/profile', 'ProfileController');

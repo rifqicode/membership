@@ -99,7 +99,7 @@
                    </div>
                  @endforeach
 
-                  <input class="form-control input-sm" onchange="creatingComments({{ $key->id }})" type="text" placeholder="Type a comment">
+                  <input class="form-control input-sm comment" id="reset"  onchange="creatingComments({{ $key->id }}  , this)" type="text" placeholder="Type a comment">
                   <br>
                   @endforeach
 
@@ -217,8 +217,26 @@
    <!-- /.content -->
 
    <script type="text/javascript">
-      function creatingComments(param){
-          alert(param);
+      function creatingComments(param , input){
+          var value = input.value;
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+          $.ajax({
+            type: "POST",
+            url: '/comments/create',
+            data: {idpost:param , text:value },
+            success: function( msg ) {
+              alert(msg);
+              input.value = "";
+              location.reload(); 
+            },
+            error: function ( err ){
+              console.log(err);
+            }
+        });
        }
    </script>
 

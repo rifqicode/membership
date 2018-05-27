@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public static function getUsersWithDetail($param)
     {
-      return User::with('detailUsers')->get();
+      return User::where('id' , $param )->with('detailUsers')->get();
     }
 
 }
