@@ -23,7 +23,7 @@
          <!-- Profile Image -->
          <div class="box box-primary">
            <div class="box-body box-profile">
-             <img class="profile-user-img img-responsive img-circle" src="/img/user2-160x160.jpg" alt="User profile picture">
+             <img class="profile-user-img img-responsive img-circle" src="{{ asset("/img" .'/'. Auth::user()->image ."")}}" alt="User profile picture">
 
              <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
 
@@ -77,15 +77,15 @@
 
                  @foreach ($datapost as $key)
                  <div class="user-block body-post">
-                    <img class="img-circle img-bordered-sm" src="/img/user1-128x128.jpg" alt="user-image">
+                    <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $key->user['image'] . "") }}" alt="user-image">
                           <span class="username">
                             <a href="#"> {{ $key->user["name"] }} </a>
                           </span>
-                        <span class="description"> {{ $key->text }}</span>
+                        <span class="description"> {{ $key->created_at }}</span>
                   </div>
                   <!-- /.user-block -->
                   <p>
-
+                      {{ $key->text }}
                   </p>
                   <ul class="list-inline">
                       <li><a href="#" class="link-black text-sm"><i class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </a></li>
@@ -94,7 +94,8 @@
 
                 @foreach ($key->comment as $comment)
                   <div class="user-block body-post">
-                          <span class="username"> {{ $comment->user["name"] }} </span>
+                         <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $key->user['image'] . "") }}" alt="user-image">
+                         <span class="username"> {{ $comment->user["name"] }} </span>
                          <span class="description">{{ $comment->text }}</span>
                    </div>
                  @endforeach
@@ -231,7 +232,7 @@
             success: function( msg ) {
               alert(msg);
               input.value = "";
-              location.reload(); 
+              location.reload();
             },
             error: function ( err ){
               console.log(err);

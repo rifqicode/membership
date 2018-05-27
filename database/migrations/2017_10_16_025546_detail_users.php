@@ -16,7 +16,6 @@ class DetailUsers extends Migration
         Schema::create('detail_users', function(Blueprint $table){
           $table->increments('id');
           $table->unsignedInteger('user_id');
-          $table->string('image')->default('default.jpg');
           $table->string('full_name');
           $table->date('birthdate');
           $table->string('address');

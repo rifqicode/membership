@@ -104,10 +104,5 @@
 
     </script>
 
-
-    <script>
-        $('#search-users').select2();
-    </script>
-
 </body>
 </html>

@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
       $iduser = Auth::user()->id;
-      $datapost = Post::with('user:id,name' , 'comment.user')->orderBy('created_at' , 'DESC')->get();
+      $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')->orderBy('created_at' , 'DESC')->get();
       return view('home')->with('datapost', $datapost);
     }
 
