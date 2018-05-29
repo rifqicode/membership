@@ -10,17 +10,24 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
 
 // home controller
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home/post/craete' , 'HomeController@craetePost')->name('postCreateDashboard');
 
+// Friend Search
+Route::get('/search/user/' , 'FriendController@searchUser')->name('searchFriend');
+
+// add Friend
+Route::get('/user/addfriend/{id}', 'FriendController@addFriend')->name('addFriend');
+
+// group controller
 Route::resource('/group', 'GroupController');
 Route::get('/join/{id}', 'JoinController@JoinGroup');
 Route::get('/leave/{id}', 'JoinController@LeaveGroup');

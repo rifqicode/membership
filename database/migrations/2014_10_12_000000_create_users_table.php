@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('group')->default('none');
+            $table->string('friend')->nullable();
             $table->integer('verification')->default('0');
             $table->string('code')->default('NULL');
             $table->rememberToken();

@@ -41,7 +41,7 @@ class User extends Authenticatable
     {
       return $this->hasMany('App\Comment');
     }
-
+    
     public static function getUsersWithDetail($param)
     {
       return User::where('id' , $param )->with('detailUsers')->get();
