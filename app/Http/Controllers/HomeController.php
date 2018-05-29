@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Post;
 use Auth;
+use DB;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,11 @@ class HomeController extends Controller
     public function index()
     {
       $iduser = Auth::user()->id;
-      $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')->orderBy('created_at' , 'DESC')->get();
+      $friend = explode(',',Auth::user()->friend);
+      $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
+                      ->whereIn('user_id' , $friend)
+                      ->orderBy('created_at' , 'DESC')
+                      ->get();
       return view('home')->with('datapost', $datapost);
     }
 
