@@ -18,33 +18,45 @@ class FriendController extends Controller
       return view('search.index')->with('datauser' , $find);
     }
 
-    public function addFriend($id)
+    public function addFriend(int $id)
     {
+
       $find = User::select('friend')->where('id' , Auth::user()->id)->get();
       $friendlist = [];
       $newfriend = [''.$id.''];
+
+
       foreach ($find as $key => $value) {
-        $friendlist = explode(',' ,$value->friend);
+        $friendlist = [$value->friend];
       }
 
-      if (sizeOf($friendlist) === 0) {
-        $get = User::find(Auth::user()->id);
-        $get->friend = implode('' , $newfriend);
-        $get->update();
-        return redirect('home');
+      if (empty($value->friend)) {
 
-      }else {
+          $user = User::find(Auth::user()->id);
+          $user->friend = $id;
+          $user->update();
+
+          return redirect('home');
+
+      } else {
+
         if (in_array($id , $friendlist)) {
-          return redirect('home');
-        } else {
-          $addfriend = array_merge($friendlist,$newfriend);
-          $implode = implode("," ,$addfriend);
-          $id = Auth::user()->id;
-          $update = User::find($id);
-          $update->friend = $implode;
-          $update->update();
-          return redirect('home');
-        }
+
+           return 'udah temenan elu woi';
+
+         } else {
+
+           $addfriend = array_merge($friendlist,$newfriend);
+           $implode = implode("," ,$addfriend);
+
+           $id = Auth::user()->id;
+           $update = User::find($id);
+
+           $update->friend = $implode;
+           $update->update();
+           return redirect('home');
+
+         }
 
       }
 

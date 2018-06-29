@@ -54,12 +54,12 @@
                        {{ $key->text }}
                      </p>
                      <ul class="list-inline">
-                         <li><p onclick="likePost()" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
+                         <li><p onclick="likePost({{ $key->id }})" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
                          <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>5</a></li>
                      </ul>
 
                    @foreach ($key->comment as $comment)
-                     <div class="user-block">
+                     <div class="user-block col-sm-12">
                            <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $comment->user['image'] . "") }}" alt="user-image">
                            <span class="username"> {{ $comment->user["name"] }} </span>
                            <span class="description">{{ $comment->text }}</span>
@@ -89,7 +89,7 @@
     <!-- /.content -->
   </div>
   <script type="text/javascript">
-     function creatingComments(param , input){
+     function creatingComments(idpost , input){
          var value = input.value;
          $.ajaxSetup({
            headers: {
@@ -99,9 +99,8 @@
          $.ajax({
            type: "POST",
            url: '/comments/create',
-           data: {idpost:param , text:value },
+           data: {idpost:idpost , text:value },
            success: function( msg ) {
-             alert(msg);
              input.value = "";
              location.reload();
            },
@@ -111,8 +110,29 @@
        });
       }
 
-      function likePost() {
+      function likePost(idpost) {
+
         alert('i like this one');
+        
+        var value = 1;
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        $.ajax({
+          type: "POST",
+          url: '/post/like',
+          data: {idpost:idpost , text:value },
+          success: function( msg ) {
+            input.value = "";
+            location.reload();
+          },
+          error: function ( err ){
+            console.log(err);
+          }
+        });
+
       }
   </script>
 @endsection

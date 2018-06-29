@@ -22,4 +22,14 @@ class PostingController extends Controller
       return redirect('/profile');
 
     }
+
+    public function like(Request $request)
+    {
+      return 'asem';
+      
+      // $id = Auth::user()->id;
+      //
+      // $like = Post::like($id , $request->idpost , $request->value);
+
+    }
 }

@@ -27,13 +27,26 @@ class HomeController extends Controller
      */
     public function index()
     {
-      $iduser = Auth::user()->id;
       $friend = explode(',',Auth::user()->friend);
-      $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
-                      ->whereIn('user_id' , $friend)
-                      ->orderBy('created_at' , 'DESC')
-                      ->get();
-      return view('home')->with('datapost', $datapost);
+
+      if (Auth::user()->friend == NULL) {
+
+        $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
+                        ->where('user_id' , Auth::user()->id)
+                        ->get();
+        return view('home')->with('datapost', $datapost);
+
+      } else {
+        $id = [''.Auth::user()->id.''];
+        $merge = array_merge($id,$friend);
+
+        $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
+                        ->whereIn('user_id' , $merge)
+                        ->orderBy('created_at' , 'DESC')
+                        ->get();
+
+        return view('home')->with('datapost', $datapost);
+      }
     }
 
     public function craetePost(Request $request)
