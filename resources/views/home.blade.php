@@ -55,7 +55,8 @@
                      </p>
                      <ul class="list-inline">
                          <li><p onclick="likePost({{ $key->id }})" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
-                         <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5"></i>5</a></li>
+                         <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5">{{-- comment --}}</i></a></li>
+
                      </ul>
 
                    @foreach ($key->comment as $comment)
@@ -101,6 +102,8 @@
            url: '/comments/create',
            data: {idpost:idpost , text:value },
            success: function( msg ) {
+             console.log(msg);
+
              input.value = "";
              location.reload();
            },
@@ -112,8 +115,8 @@
 
       function likePost(idpost) {
 
-        alert('i like this one');
-        
+        // alert('i like this one');
+
         var value = 1;
         $.ajaxSetup({
           headers: {
@@ -123,10 +126,10 @@
         $.ajax({
           type: "POST",
           url: '/post/like',
-          data: {idpost:idpost , text:value },
+          data: {idpost:idpost , value:value },
           success: function( msg ) {
-            input.value = "";
-            location.reload();
+            console.log(msg);
+            // location.reload();
           },
           error: function ( err ){
             console.log(err);

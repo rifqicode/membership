@@ -36,8 +36,8 @@ Route::get('/leave/{id}', 'JoinController@LeaveGroup');
 Route::get('/get/findEmailIfSame/{email}' , 'AjaxResourceController@findEmailIfSame');
 
 // posting controller
-Route::post('/post/create' , 'PostingController@create')->name('postCreate');
 Route::post('/post/like' , 'PostingController@like')->name('postLike');
+Route::post('/post/create' , 'PostingController@create')->name('postCreate');
 Route::post('/comments/create' , 'CommentController@createComment')->name('commentCreate');
 
 // profile controller

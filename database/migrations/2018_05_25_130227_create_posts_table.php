@@ -16,9 +16,10 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
+            $table->string('user_like')->nullable();
             $table->string('proof')->default('default.jpg');
             $table->string('text');
-            $table->string('like')->nullable();
+            $table->integer('like')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -25,11 +25,56 @@ class PostingController extends Controller
 
     public function like(Request $request)
     {
-      return 'asem';
-      
-      // $id = Auth::user()->id;
-      //
-      // $like = Post::like($id , $request->idpost , $request->value);
+
+      $userId =  Auth::user()->id;
+
+      $dataPost = Post::select('user_like' , 'like')->where('id', $request->idpost)->get();
+
+      if (empty($dataPost[0]->like)) {
+
+        $like = Post::likePost($userId , $request->idpost , 1);
+
+      } else {
+
+        $valueLike = $dataPost[0]->like + 1;
+        $newLike = [];
+
+        if ($valueLike >= 2) {
+
+          $usersLike = $dataPost[0]->user_like;
+          $explode = explode(',' , $usersLike);
+
+          if (in_array($userId , $explode)) {
+            return 'Sudah Like';
+          } else {
+
+            $new = [$userId];
+            $merge = array_merge($explode , $new );
+            $implode = implode(',' , $merge);
+
+            $like = Post::likePost($implode , $request->idpost , $valueLike);
+
+          }
+
+        } elseif ($valueLike == 1) {
+
+          $usersLike = $dataPost[0]->user_like;
+          $explode = explode(',' , $usersLike);
+          $newLike = [$userId];
+          $merge = array_merge($explode , $newLike);
+          $implode = implode(',' , $merge);
+
+          $like = Post::likePost($implode , $request->idpost , $valueLike);
+
+        }
+
+      }
+
+      if ($like) {
+        return 'success';
+      } else {
+        return 'failed';
+      }
 
     }
 }
