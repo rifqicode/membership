@@ -90,6 +90,7 @@
     <!-- /.content -->
   </div>
   <script type="text/javascript">
+
      function creatingComments(idpost , input){
          var value = input.value;
          $.ajaxSetup({
@@ -103,7 +104,6 @@
            data: {idpost:idpost , text:value },
            success: function( msg ) {
              console.log(msg);
-
              input.value = "";
              location.reload();
            },
@@ -114,8 +114,6 @@
       }
 
       function likePost(idpost) {
-
-        // alert('i like this one');
 
         var value = 1;
         $.ajaxSetup({
@@ -128,8 +126,9 @@
           url: '/post/like',
           data: {idpost:idpost , value:value },
           success: function( msg ) {
-            console.log(msg);
-            // location.reload();
+            if (msg) {
+              location.reload();
+            }
           },
           error: function ( err ){
             console.log(err);

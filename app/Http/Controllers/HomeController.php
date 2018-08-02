@@ -15,9 +15,13 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+
+    private $post;
+
+    public function __construct(Post $post)
     {
         $this->middleware('auth');
+        $this->post = $post;
     }
 
     /**
@@ -27,30 +31,31 @@ class HomeController extends Controller
      */
     public function index()
     {
+
       $friend = explode(',',Auth::user()->friend);
 
       if (Auth::user()->friend == NULL) {
 
-        $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
-                        ->where('user_id' , Auth::user()->id)
-                        ->get();
+        $datapost = $this->post->viewAllPost(Auth::user()->id);
+
         return view('home')->with('datapost', $datapost);
 
       } else {
-        $id = [''.Auth::user()->id.''];
+
+        $id = [Auth::user()->id];
         $merge = array_merge($id,$friend);
 
-        $datapost = Post::with('user:id,name,image' , 'comment.user:id,name,image')
-                        ->whereIn('user_id' , $merge)
-                        ->orderBy('created_at' , 'DESC')
-                        ->get();
+        $datapost = $this->post->viewAllFriendPost($merge);
 
         return view('home')->with('datapost', $datapost);
+
       }
+
     }
 
     public function craetePost(Request $request)
     {
+
       $usersId = Auth::user()->id;
       $post = new Post;
       $post->user_id = $usersId;
@@ -59,5 +64,7 @@ class HomeController extends Controller
       $post->save();
 
       return redirect('/home');
+
     }
+
 }

@@ -27,7 +27,6 @@ class PostingController extends Controller
     {
 
       $userId =  Auth::user()->id;
-
       $dataPost = Post::select('user_like' , 'like')->where('id', $request->idpost)->get();
 
       if (empty($dataPost[0]->like)) {
@@ -45,22 +44,25 @@ class PostingController extends Controller
           $explode = explode(',' , $usersLike);
 
           if (in_array($userId , $explode)) {
-            return 'Sudah Like';
-          } else {
-
-            $new = [$userId];
-            $merge = array_merge($explode , $new );
-            $implode = implode(',' , $merge);
-
-            $like = Post::likePost($implode , $request->idpost , $valueLike);
-
+            return '';
           }
+
+          $new = [$userId];
+          $merge = array_merge($explode , $new );
+          $implode = implode(',' , $merge);
+
+          $like = Post::likePost($implode , $request->idpost , $valueLike);
 
         } elseif ($valueLike == 1) {
 
           $usersLike = $dataPost[0]->user_like;
           $explode = explode(',' , $usersLike);
           $newLike = [$userId];
+
+          if (in_array($userId , $explode)) {
+            return '';
+          }
+
           $merge = array_merge($explode , $newLike);
           $implode = implode(',' , $merge);
 
@@ -73,7 +75,7 @@ class PostingController extends Controller
       if ($like) {
         return 'success';
       } else {
-        return 'failed';
+        return '';
       }
 
     }

@@ -17,7 +17,7 @@ class Post extends Model
       return $this->belongsTo('App\User');
     }
 
-    public static function likePost($User , Int $post_id , Int $value )
+    public static function likePost($User , Int $post_id , Int $value)
     {
 
       $update = array (
@@ -27,6 +27,24 @@ class Post extends Model
 
       $query = Post::where('id' , $post_id)->update($update);
 
+      return $query;
+    }
+
+    public static function viewAllPost(string $id)
+    {
+      $query =  Post::with('user:id,name,image' , 'comment.user:id,name,image')
+                      ->where('user_id' , $id)
+                      ->orderBy('created_at', 'DESC')
+                      ->get();
+      return $query;
+    }
+
+    public static function viewAllFriendPost(array $id)
+    {
+      $query =   Post::with('user:id,name,image' , 'comment.user:id,name,image')
+                      ->whereIn('user_id' , $id)
+                      ->orderBy('created_at', 'DESC')
+                      ->get();
       return $query;
     }
 
