@@ -103,8 +103,6 @@
            url: '/comments/create',
            data: {idpost:idpost , text:value },
            success: function( msg ) {
-             console.log(msg);
-             input.value = "";
              location.reload();
            },
            error: function ( err ){
