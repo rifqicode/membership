@@ -9,17 +9,34 @@ use Auth;
 
 class PostingController extends Controller
 {
-    public function create(Request $request)
+    public function craetePost(Request $request)
     {
       $usersId = Auth::user()->id;
+      $image = $request->file('image');
 
-      $post = new Post;
-      $post->user_id = $usersId;
-      $post->text = $request->input('text');
-      $post->updated_at = NULL;
-      $post->save();
+      if (!$image) {
+        $post = new Post;
+        $post->user_id = $usersId;
+        $post->text = $request->input('text');
+        $post->updated_at = NULL;
+        $post->save();
+      } else {
 
-      return redirect('/profile');
+        $post = new Post;
+        $post->user_id = $usersId;
+        $post->proof = $image->getClientOriginalName();
+        $post->text = $request->input('text');
+        $post->updated_at = NULL;
+        $post->save();
+
+        // move
+        $filename = $image->getClientOriginalName();
+        $image->move('posting' , $filename);
+
+      }
+
+      return redirect('/home');
+
 
     }
 

@@ -53,18 +53,5 @@ class HomeController extends Controller
 
     }
 
-    public function craetePost(Request $request)
-    {
-
-      $usersId = Auth::user()->id;
-      $post = new Post;
-      $post->user_id = $usersId;
-      $post->text = $request->input('text');
-      $post->updated_at = NULL;
-      $post->save();
-
-      return redirect('/home');
-
-    }
 
 }

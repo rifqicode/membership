@@ -62,7 +62,7 @@
                <div class="post" id="post">
 
                  <div class="user-block">
-                   <form class="form-horizontal" action="{{ route('postCreate') }}" method="POST">
+                   <form class="form-horizontal" action="{{ route('postCreateDashboard') }}" method="POST">
                    {{ csrf_field() }}
                      <div class="form-group margin-bottom-none">
                        <div class="col-sm-9">
