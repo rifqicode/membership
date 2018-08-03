@@ -21,25 +21,33 @@
             <div class="box-header with-border">
               <h3 class="box-title">Dashboard</h3>
             </div>
+
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="user-block">
+                    <form class="form-horizontal" action="{{ route('postCreateDashboard') }}" method="POST">
+                    {{ csrf_field() }}
+                      <div class="form-group margin-bottom-none">
+                        <div class="col-sm-9">
+                          <input class="form-control input-sm" name="text" placeholder="Whats Happed Today ??">
+                        </div>
+                        <div class="col-sm-3">
+                          <button type="submit" class="btn btn-primary pull-right btn-block btn-sm">Post</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
                   <div class="post" id="post">
-
-                    <div class="user-block">
-                      <form class="form-horizontal" action="{{ route('postCreateDashboard') }}" method="POST">
-                      {{ csrf_field() }}
-                        <div class="form-group margin-bottom-none">
-                          <div class="col-sm-9">
-                            <input class="form-control input-sm" name="text" placeholder="Whats Happed Today ??">
-                          </div>
-                          <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary pull-right btn-block btn-sm">Post</button>
-                          </div>
-                        </div>
-                      </form>
-                    </div>
 
                     @foreach ($datapost as $key)
                     <div class="user-block">
