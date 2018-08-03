@@ -28,6 +28,7 @@ class PostingController extends Controller
         $post->text = $request->input('text');
         $post->updated_at = NULL;
         $post->save();
+        
       } else {
 
         $filename = Auth::user()->name.'_'.rand(1,99999).'.'.$image->getClientOriginalExtension();
