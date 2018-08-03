@@ -25,19 +25,24 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
+                  <div class="box-body">
 
                   <div class="user-block">
-                    <form class="form-horizontal" action="{{ route('postCreateDashboard') }}" method="POST">
+                    <form class="form-horizontal" action="{{ route('postCreateDashboard') }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                       <div class="form-group margin-bottom-none">
                         <div class="col-sm-9">
-                          <input class="form-control input-sm" name="text" placeholder="Whats Happed Today ??">
+                          <textarea name="text" rows="2" cols="100"></textarea>
+                          <br>
+                          <input type="file" name="image">
                         </div>
                         <div class="col-sm-3">
                           <button type="submit" class="btn btn-primary pull-right btn-block btn-sm">Post</button>
                         </div>
                       </div>
                     </form>
+                  </div>
+
                   </div>
 
                 </div>

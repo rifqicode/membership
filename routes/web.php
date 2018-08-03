@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 // home controller
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home/post/craete' , 'PostingController@craetePost')->name('postCreateDashboard');
+Route::post('/home/post/craete' , 'PostingController@createPost')->name('postCreateDashboard');
 
 // Friend Search
 Route::get('/search/user/' , 'FriendController@searchUser')->name('searchFriend');

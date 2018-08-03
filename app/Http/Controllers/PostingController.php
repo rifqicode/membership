@@ -9,7 +9,15 @@ use Auth;
 
 class PostingController extends Controller
 {
-    public function craetePost(Request $request)
+    // Auth
+    private $user;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function createPost(Request $request)
     {
       $usersId = Auth::user()->id;
       $image = $request->file('image');
@@ -22,15 +30,16 @@ class PostingController extends Controller
         $post->save();
       } else {
 
+        $filename = Auth::user()->name.'_'.rand(1,99999).'.'.$image->getClientOriginalExtension();
+
         $post = new Post;
         $post->user_id = $usersId;
-        $post->proof = $image->getClientOriginalName();
+        $post->proof = $filename;
         $post->text = $request->input('text');
         $post->updated_at = NULL;
         $post->save();
 
         // move
-        $filename = $image->getClientOriginalName();
         $image->move('posting' , $filename);
 
       }
