@@ -34,10 +34,9 @@ class HomeController extends Controller
 
       $friend = explode(',',Auth::user()->friend);
 
-      if (Auth::user()->friend == NULL) {
+      if (!Auth::user()->friend) {
 
         $datapost = $this->post->viewAllPost(Auth::user()->id);
-
         return view('home')->with('datapost', $datapost);
 
       } else {
@@ -46,7 +45,6 @@ class HomeController extends Controller
         $merge = array_merge($id,$friend);
 
         $datapost = $this->post->viewAllFriendPost($merge);
-
         return view('home')->with('datapost', $datapost);
 
       }

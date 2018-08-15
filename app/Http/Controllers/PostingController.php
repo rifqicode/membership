@@ -21,6 +21,7 @@ class PostingController extends Controller
     {
       $usersId = Auth::user()->id;
       $image = $request->file('image');
+      $text = $request->input('text');
 
       if (!$image) {
         $post = new Post;
@@ -28,7 +29,7 @@ class PostingController extends Controller
         $post->text = $request->input('text');
         $post->updated_at = NULL;
         $post->save();
-        
+
       } else {
 
         $filename = Auth::user()->name.'_'.rand(1,99999).'.'.$image->getClientOriginalExtension();
@@ -36,10 +37,14 @@ class PostingController extends Controller
         $post = new Post;
         $post->user_id = $usersId;
         $post->proof = $filename;
-        $post->text = $request->input('text');
+        if (!$text) {
+          $post->text = '';
+        } else {
+          $post->text = $text;
+        }
         $post->updated_at = NULL;
         $post->save();
-
+        
         // move
         $image->move('posting' , $filename);
 

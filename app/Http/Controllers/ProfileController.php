@@ -14,21 +14,29 @@ use DB;
 
 class ProfileController extends Controller
 {
+    private $user;
+    private $post;
+    private $detailUser;
 
-    public function __construct()
+    public function __construct(User $user , Post $post , Detail_users $detail)
     {
         $this->middleware('auth');
+        $this->user = $user;
+        $this->post = $post;
+        $this->detailUser = $detail;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $iduser = Auth::user()->id;
-        $datauser = Detail_users::findUsersById($iduser);
-
+        $datauser = $this->detailUser->findUsersById($iduser);
+        
         $datapost = Post::where('user_id' , $iduser)->with('user:id,name,image' , 'comment.user:id,name,image')->orderBy('created_at' , 'DESC')->get();
         return view('profile.index' , compact('datauser' , 'datapost'));
 

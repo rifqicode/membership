@@ -52,39 +52,78 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-12">
-                  <div class="post" id="post">
 
                     @foreach ($datapost as $key)
-                    <div class="user-block">
-                       <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $key->user['image'] . "") }}" alt="user-image">
-                             <span class="username">
-                               <p> {{ $key->user["name"] }} </p>
-                              </span>
-                           <span class="description"> Posting at {{ $key->created_at }}</span>
+                    @if (!$key->proof)
+                    <div class="post" id="post">
+                      <div class="user-block">
+                         <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $key->user['image'] . "") }}" alt="user-image">
+                               <span class="username">
+                                 <p> {{ $key->user["name"] }} </p>
+                                </span>
+                             <span class="description"> Posting at {{ $key->created_at }}</span>
+                       </div>
+                       <!-- /.user-block -->
+                       <p>
+                         {{ $key->text }}
+                       </p>
+                       <ul class="list-inline">
+                           <li><p onclick="likePost({{ $key->id }})" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
+                           <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5">{{-- comment --}}</i></a></li>
+
+                       </ul>
+
+                     @foreach ($key->comment as $comment)
+                       <div class="user-block col-sm-12">
+                             <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $comment->user['image'] . "") }}" alt="user-image">
+                             <span class="username"> {{ $comment->user["name"] }} </span>
+                             <span class="description">{{ $comment->text }}</span>
+                       </div>
+                      @endforeach
+
+                       <input class="form-control input-sm comment" id="reset"  onchange="creatingComments({{ $key->id }},this)" type="text" placeholder="Type a comment">
+                       <br>
                      </div>
-                     <!-- /.user-block -->
-                     <p>
-                       {{ $key->text }}
-                     </p>
-                     <ul class="list-inline">
-                         <li><p onclick="likePost({{ $key->id }})" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
-                         <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5">{{-- comment --}}</i></a></li>
+                     @else
 
-                     </ul>
+                       <div class="post" id="post">
+                           <div class="user-block">
+                              <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $key->user['image'] . "") }}" alt="user-image">
+                                    <span class="username">
+                                      <p> {{ $key->user["name"] }} </p>
+                                     </span>
+                                  <span class="description"> Posting at {{ $key->created_at }}</span>
+                            </div>
+                            <div class="row margin-bottom">
+                              <div class="col-sm-6">
+                                <img class="img-responsive" src="{{ asset("posting/" . $key->proof)}}" alt="Photo">
+                              </div>
+                            </div>
+                            <!-- /.user-block -->
+                            <p>
+                              {{ $key->text }}
+                            </p>
+                            <ul class="list-inline">
+                                <li><p onclick="likePost({{ $key->id }})" class="link-black text-sm"><i onclick="likePost()" class="fa fa-thumbs-o-up margin-r-5"></i> {{ $key->like }} Like </p></li>
+                                <li class="pull-right"><a href="#" class="link-black text-sm"><i class="fa fa-comments-o margin-r-5">{{-- comment --}}</i></a></li>
 
-                   @foreach ($key->comment as $comment)
-                     <div class="user-block col-sm-12">
-                           <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $comment->user['image'] . "") }}" alt="user-image">
-                           <span class="username"> {{ $comment->user["name"] }} </span>
-                           <span class="description">{{ $comment->text }}</span>
-                      </div>
-                    @endforeach
+                            </ul>
 
-                     <input class="form-control input-sm comment" id="reset"  onchange="creatingComments({{ $key->id }},this)" type="text" placeholder="Type a comment">
-                     <br>
+                          @foreach ($key->comment as $comment)
+                            <div class="user-block col-sm-12">
+                                  <img class="img-circle img-bordered-sm" src="{{ asset("img/" . $comment->user['image'] . "") }}" alt="user-image">
+                                  <span class="username"> {{ $comment->user["name"] }} </span>
+                                  <span class="description">{{ $comment->text }}</span>
+                            </div>
+                           @endforeach
+
+                            <input class="form-control input-sm comment" id="reset"  onchange="creatingComments({{ $key->id }},this)" type="text" placeholder="Type a comment">
+                            <br>
+                        </div>
+                     @endif
+
                      @endforeach
 
-                  </div>
                 </div>
               <!-- /.row -->
             </div>
