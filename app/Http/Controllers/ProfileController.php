@@ -34,11 +34,19 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $iduser = Auth::user()->id;
+        $user = Auth::user();
+
+        $iduser = $user->id;
         $datauser = $this->detailUser->findUsersById($iduser);
-        
+        $countFollowers = $this->user->findFollowerUsers($iduser);
+
+        $following = 0;
+        if ($user->friend) {
+          $following = sizeOf(explode(" " , $user->friend));
+        }
+
         $datapost = Post::where('user_id' , $iduser)->with('user:id,name,image' , 'comment.user:id,name,image')->orderBy('created_at' , 'DESC')->get();
-        return view('profile.index' , compact('datauser' , 'datapost'));
+        return view('profile.index' , compact('datauser' , 'datapost' , 'countFollowers' , 'following'));
 
     }
 

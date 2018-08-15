@@ -8,8 +8,7 @@
        User Profile
      </h1>
      <ol class="breadcrumb">
-       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-       <li><a href="#">Examples</a></li>
+       <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
        <li class="active">User profile</li>
      </ol>
    </section>
@@ -23,6 +22,7 @@
          <!-- Profile Image -->
          <div class="box box-primary">
            <div class="box-body box-profile">
+
              <img class="profile-user-img img-responsive img-circle" src="{{ asset("/img" .'/'. Auth::user()->image ."")}}" alt="User profile picture">
 
              <h3 class="profile-username text-center">{{ Auth::user()->name }}</h3>
@@ -31,17 +31,13 @@
 
              <ul class="list-group list-group-unbordered">
                <li class="list-group-item">
-                 <b>Followers</b> <a class="pull-right">1,322</a>
+                 <b>Followers</b> <a class="pull-right">{{ $countFollowers }}</a>
                </li>
                <li class="list-group-item">
-                 <b>Following</b> <a class="pull-right">543</a>
-               </li>
-               <li class="list-group-item">
-                 <b>Friends</b> <a class="pull-right">13,287</a>
+                 <b>Following</b> <a class="pull-right"> {{ $following }}</a>
                </li>
              </ul>
 
-             <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
            </div>
            <!-- /.box-body -->
          </div>

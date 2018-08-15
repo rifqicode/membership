@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use DB;
 
 class User extends Authenticatable
 {
@@ -41,10 +42,19 @@ class User extends Authenticatable
     {
       return $this->hasMany('App\Comment');
     }
-    
+
     public static function getUsersWithDetail($param)
     {
       return User::where('id' , $param )->with('detailUsers')->get();
+    }
+
+    public static function findFollowerUsers($id)
+    {
+      $countFollowersUsers = DB::table('users')
+                            ->where('friend', 'like', '%'.$id.'%')
+                            ->get();
+
+      return count($countFollowersUsers);
     }
 
 }
