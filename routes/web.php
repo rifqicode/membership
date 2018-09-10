@@ -19,11 +19,16 @@ Route::get('/', function () {
 
 // rooms controller
 Route::get('/rooms', 'RoomsController@index')->name('rooms');
+Route::get('/rooms/create', 'RoomsController@createRoomPage')->name('createRooms');
+Route::get('/rooms/create/{id_room}/item', 'RoomsController@createItemPage')->name('createItem');
+
+Route::post('/rooms/create/post', 'RoomsController@createRoom')->name('postRooms');
+Route::post('/rooms/create/{id_room}/item/post', 'RoomsController@createItem')->name('postItem');
 
 
 // home controller
 Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/home/post/craete' , 'PostingController@createPost')->name('postCreateDashboard');
+Route::post('/home/post/create' , 'PostingController@createPost')->name('postCreateDashboard');
 
 // Friend Search
 Route::get('/search/user/' , 'FriendController@searchUser')->name('searchFriend');

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
@@ -36,6 +37,8 @@
     <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 
 <body class="hold-transition fixed skin-purple-light sidebar-mini">
@@ -49,23 +52,16 @@
 
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" charset="utf-8"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/core.js" charset="utf-8"></script>
-    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script src="{{ asset('js/app.js') }}"></script>
-    <!-- jQuery 2.2.3 -->
-    <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
     <!-- jQuery UI 1.11.4 -->
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-    </script>
-    <script>
-      $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-    </script>
+
     <!-- Bootstrap 3.3.6 -->
     <script src="{{asset('/js/bootstrap.min.js')}}"></script>t>
 
@@ -80,19 +76,19 @@
     <script src="{{ asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 
     <!-- Slimscroll -->
-    <script src="{{('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+    <script src="{{ asset('plugins/slimScroll/jquery.slimscroll.js')}}"></script>
 
     <!-- FastClick -->
     <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
 
     <!-- AdminLTE App -->
-    <script src="{{asset('/js/app.js')}}"></script>
-    <script src="{{asset('/js/app.min.js')}}"></script>
-    <script src="{{asset('/js/dataTables.min.js')}}"></script>
+    <script src="{{ asset('/js/app.js')}}"></script>
+    <script src="{{ asset('/js/app.min.js')}}"></script>
+    <script src="{{ asset('/js/dataTables.min.js')}}"></script>
 
     <!-- Setting active sidebar -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script type="text/javascript">
 
     var pathArray = window.location.pathname.split( '/' );
@@ -101,6 +97,16 @@
         document.getElementById(segment_1).classList.add("active");
     }
 
+    $('#category').select2();
+
+    $('#daterangepicker').daterangepicker({
+      timePicker: true,
+      startDate: moment().startOf('hour'),
+      endDate: moment().startOf('hour').add(32, 'hour'),
+      locale: {
+        format: 'M/DD hh:mm A'
+      }
+    });
     </script>
 
 </body>

@@ -47,7 +47,7 @@
          </a>
        </li>
 
-       <li id="room">
+       <li id="rooms">
          <a href="{{ route('rooms') }}">
            <i class="fa fa-users"></i> <span>Rooms</span>
            <span class="pull-right-container">
