@@ -17,6 +17,10 @@ Route::get('/', function () {
 });
 
 
+// rooms controller
+Route::get('/rooms', 'RoomsController@index')->name('rooms');
+
+
 // home controller
 Route::get('/home', 'HomeController@index')->name('home');
 Route::post('/home/post/craete' , 'PostingController@createPost')->name('postCreateDashboard');

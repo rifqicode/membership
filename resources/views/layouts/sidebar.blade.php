@@ -47,6 +47,15 @@
          </a>
        </li>
 
+       <li id="room">
+         <a href="{{ route('rooms') }}">
+           <i class="fa fa-users"></i> <span>Rooms</span>
+           <span class="pull-right-container">
+             <small class="label pull-right bg-green">new</small>
+           </span>
+         </a>
+       </li>
+
        <li id="group">
          <a href="/group">
            <i class="fa fa-users"></i> <span>Group</span>
