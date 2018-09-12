@@ -8,7 +8,7 @@ class Rooms extends Model
 {
     public function participant()
     {
-      return $this->hasMany('App\Participants');
+      return $this->hasMany('App\Participants' , 'id' , 'room_id');
     }
 
     public function user()

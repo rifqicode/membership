@@ -15,15 +15,15 @@ class RoomsController extends Controller
 
     private $rooms;
     private $item;
-    private $participants;
+    private $participant;
     private $category;
 
-    public function __construct(Rooms $rooms , Item $item , Participants $participants , Category $category)
+    public function __construct(Rooms $rooms , Item $item , Participants $participant , Category $category)
     {
         $this->middleware('auth');
         $this->rooms = $rooms;
         $this->item = $item;
-        $this->participants = $participants;
+        $this->participant = $participant;
         $this->category = $category;
     }
 
@@ -31,8 +31,39 @@ class RoomsController extends Controller
     public function index()
     {
       // get rooms datas
-      $rooms = $this->rooms->with('user:id,name' , 'category:id,name')->get();
-      return view('rooms.index')->with('rooms' , $rooms);
+      $rooms =  $this->rooms->with('user:id,name' , 'category:id,name,img')
+                            ->get();
+
+      $result = [];
+
+      foreach ($rooms as $key => $value) {
+        $findParticipants = $this->participant->where('room_id' , $value->id)
+                                              ->limit(5)
+                                              ->orderBy('created_at' , 'DESC')
+                                              ->get();
+
+        $checkParticipants = $this->participant->where(['room_id' => $value->id , 'user_id' => Auth::user()->id])->get();
+        $status = 0;
+
+
+        if (sizeOf($checkParticipants) > 0) {
+          $status = 1;
+        }
+
+        $result[] = [ 'id_room' => $value->id,
+                      'name' => $value->name,
+                      'start_at' => $value->start_at,
+                      'end_at' => $value->end_at,
+                      'user' => $value->user,
+                      'category' => $value->category,
+                      'category_img' => $value->category->img,
+                      'participant' => $findParticipants,
+                      'status' => $status];
+
+
+      }
+
+      return view('rooms.index')->with('rooms' , $result);
     }
 
     // page
@@ -91,6 +122,37 @@ class RoomsController extends Controller
       $item->name = $request->input('item');
       $item->item_picture = $image;
       $item->save();
+
+      return redirect()->route('rooms');
+
+    }
+
+    public function joinRoom($room_id)
+    {
+
+      $user_id = Auth::user()->id;
+
+      $find = $this->participant->findParticipants($room_id , $user_id);
+      $size = sizeOf($find);
+
+      if (!$size) {
+        $participant = new Participants();
+        $participant->room_id = $room_id;
+        $participant->user_id = $user_id;
+        $participant->save();
+
+        return redirect()->route('rooms');
+      }
+
+      return redirect()->route('rooms');
+
+    }
+
+    public function unJoinRoom($room_id)
+    {
+      $user_id = Auth::user()->id;
+
+      $find = $this->participant->where(['room_id' => $room_id , 'user_id' => $user_id])->delete();
 
       return redirect()->route('rooms');
 

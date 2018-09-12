@@ -22,6 +22,9 @@ Route::get('/rooms', 'RoomsController@index')->name('rooms');
 Route::get('/rooms/create', 'RoomsController@createRoomPage')->name('createRooms');
 Route::get('/rooms/create/{id_room}/item', 'RoomsController@createItemPage')->name('createItem');
 
+Route::get('/rooms/join/{id_room}', 'RoomsController@joinRoom')->name('joinRoom');
+Route::get('/rooms/unjoin/{id_room}', 'RoomsController@unJoinRoom')->name('unJoinRoom');
+
 Route::post('/rooms/create/post', 'RoomsController@createRoom')->name('postRooms');
 Route::post('/rooms/create/{id_room}/item/post', 'RoomsController@createItem')->name('postItem');
 
