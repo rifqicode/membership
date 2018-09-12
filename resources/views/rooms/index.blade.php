@@ -44,7 +44,6 @@
                 <div class="col-md-8">
                   <div>
                       <img src="{{ asset("/category" .'/'. $value['category_img'] ."")}}" height="130" width="200" alt="Category Img">
-                      {{-- <img src="{{ asset('category/'.$value['category']->img)}}" alt="img"> --}}
                   </div>
                 </div>
 
@@ -61,7 +60,12 @@
             <div class="box-footer no-padding">
                 <p style="padding-left:20px;">Created By ( {{ $value['user']->name }})</p>
                 @if ($value['status'] == 1)
-                  <p align="right" style="padding-right:30px;"> <a class="btn btn-danger" href="{{ route('unJoinRoom' , ['id_room' => $value['id_room']])}}">Batalkan</a> </p>
+                  <div class="">
+                    <p align="right" style="padding-right:30px;">
+                       <a class="btn btn-danger" href="{{ route('unJoinRoom' , ['id_room' => $value['id_room']])}}">Unjoin</a>
+                      <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
+                    </p>
+                  </div>
                 @else
                   <p align="right" style="padding-right:30px;"> <a class="btn btn-primary" href="{{ route('joinRoom' , ['id_room' => $value['id_room']])}}">Join</a> </p>
                 @endif

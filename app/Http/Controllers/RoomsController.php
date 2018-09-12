@@ -32,6 +32,7 @@ class RoomsController extends Controller
     {
       // get rooms datas
       $rooms =  $this->rooms->with('user:id,name' , 'category:id,name,img')
+                            ->orderBy('created_at' , 'DESC')
                             ->get();
 
       $result = [];
@@ -105,7 +106,7 @@ class RoomsController extends Controller
 
     }
 
-    public function createItem(Request $request , $room_id)
+    public function createItem(Request $request , String $room_id)
     {
       $user_id = Auth::user()->id;
       $image = '';
@@ -127,7 +128,7 @@ class RoomsController extends Controller
 
     }
 
-    public function joinRoom($room_id)
+    public function joinRoom(String $room_id)
     {
 
       $user_id = Auth::user()->id;
@@ -148,7 +149,7 @@ class RoomsController extends Controller
 
     }
 
-    public function unJoinRoom($room_id)
+    public function unJoinRoom(String $room_id)
     {
       $user_id = Auth::user()->id;
 
@@ -156,6 +157,11 @@ class RoomsController extends Controller
 
       return redirect()->route('rooms');
 
+    }
+
+    public function viewRoom(String $room_id)
+    {
+      return view('rooms.viewroom');
     }
 
 
