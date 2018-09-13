@@ -58,7 +58,7 @@
               </div>
             </div>
             <div class="box-footer no-padding">
-                <p style="padding-left:20px;">Created By ( {{ $value['user']->name }})</p>
+                <p style="padding-left:20px;">Created By ( {{ $value['user']->name }} )</p>
                 @if ($value['status'] == 1)
                   <div class="">
                     <p align="right" style="padding-right:30px;">

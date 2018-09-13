@@ -20,4 +20,5 @@ class Rooms extends Model
     {
       return $this->belongsTo('App\Category', 'categories_id', 'id');
     }
+
 }

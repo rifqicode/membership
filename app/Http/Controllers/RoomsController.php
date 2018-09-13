@@ -161,7 +161,31 @@ class RoomsController extends Controller
 
     public function viewRoom(String $room_id)
     {
-      return view('rooms.viewroom');
+      $user_id = Auth::user()->id;
+
+      $room = $this->rooms->with('user:id,name' , 'category:id,name,img')->where('id' , $room_id)->get();
+      $item = $this->item->where('room_id' , $room_id)->get();
+
+      return view('rooms.viewroom' , compact('room' , 'item'));
+    }
+
+    public function rollItem(String $room_id)
+    {
+      $itemList = $this->item->where('room_id' , $room_id);
+      $participantList = $this->participant->getParticipantList($room_id);
+
+      $participantRandom = [];
+
+      foreach ($participantList as $key => $value) {
+        $participantRandom[]= [ $value->name ];
+      }
+
+      $winner = $participantRandom[array_rand($participantRandom)];
+
+      // $itemList->status = 1;
+      // $itemList->update();
+
+      return $winner;
     }
 
 

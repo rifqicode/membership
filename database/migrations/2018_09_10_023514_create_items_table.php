@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('room_id');
             $table->string('name');
             $table->string('item_picture');
+            $table->string('status');
 
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
 

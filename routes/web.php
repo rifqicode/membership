@@ -30,6 +30,8 @@ Route::get('/rooms/view/{id_room}', 'RoomsController@viewRoom')->name('viewRoom'
 Route::post('/rooms/create/post', 'RoomsController@createRoom')->name('postRooms');
 Route::post('/rooms/create/{id_room}/item/post', 'RoomsController@createItem')->name('postItem');
 
+Route::get('/rooms/roll/{id_room}/item/now', 'RoomsController@rollItem')->name('rollItem');
+
 
 // home controller
 Route::get('/home', 'HomeController@index')->name('home');
