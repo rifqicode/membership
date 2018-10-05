@@ -45,11 +45,17 @@
                 <thead>
                   <tr bgcolor="#b3d9ff">
                     <td>Name</td>
+                    @if ($value->winner)
+                      <td>Winner</td>
+                    @endif
                   </tr>
                 </thead>
 
                 <tbody>
                   <td> <p>{{ $value->name }}</p> </td>
+                  @if ($value->winner)
+                    <td> <p> {{ $value->winner }} </p> </td>
+                  @endif
                 </tbody>
               </table>
 

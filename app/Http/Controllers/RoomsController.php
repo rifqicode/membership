@@ -124,7 +124,8 @@ class RoomsController extends Controller
       $item->room_id = $room_id;
       $item->name = $request->input('item');
       $item->item_picture = $image;
-      $item->status = 1;
+      // status 0 = belum diroll / status 1 = sudah diroll
+      $item->status = 0;
       $item->save();
 
       return redirect()->route('rooms');
@@ -147,7 +148,7 @@ class RoomsController extends Controller
         return redirect()->route('rooms');
       }
 
-      return redirect()->route('rooms');
+        return redirect()->route('rooms');
 
     }
 
@@ -167,9 +168,10 @@ class RoomsController extends Controller
 
       $room = $this->rooms->with('user:id,name' , 'category:id,name,img')->where('id' , $room_id)->get();
       $item = $this->item->where('room_id' , $room_id)->get();
-      $participantList = $this->participant->getParticipantList($room_id);
 
+      $participantList = $this->participant->getParticipantList($room_id);
       $status = 0;
+      $rolled = 0;
 
       foreach ($room as $key => $value) {
         if ($value->user_id == $user_id) {
@@ -184,21 +186,36 @@ class RoomsController extends Controller
 
     public function rollItem(String $room_id)
     {
-      $itemList = $this->item->where('room_id' , $room_id);
+      $itemList = $this->item->where(['room_id' => $room_id , 'status' => 0])->get();
       $participantList = $this->participant->getParticipantList($room_id);
 
       $participantRandom = [];
 
       foreach ($participantList as $key => $value) {
-        $participantRandom[]= [$value->name];
+        $participantRandom[]= $value->name;
       }
 
-      dd($itemList);
-      // foreach ($itemList as $key => $value) {
-      // }
+      if (sizeOf($itemList) >= 1) {
+        $winner = [];
 
-      // $winner = $participantRandom[array_rand($participantRandom)];
-      // return $winner;
+        foreach ($itemList as $key => $value) {
+          $participant = $participantRandom[array_rand($participantRandom)];
+
+          $winner[] = ['item' => $value->id , 'room_id' => $value->room_id ,  'winner' => $participant];
+        }
+
+        foreach ($winner as $key => $value) {
+          $updateItem = $this->item->find($value['item']);
+          $updateItem->winner = $value['winner'];
+          $updateItem->status = 1;
+          $updateItem->update();
+        }
+
+        return redirect()->back();
+      } else {
+        return redirect()->back();
+      }
+
     }
 
 
