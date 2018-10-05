@@ -32,7 +32,12 @@
 
            <div class="box box-default" style="height:240px;">
             <div class="box-header with-border">
-              <h3 class="box-title">{{ $value['name'] }}</h3>
+              <h3 class="box-title">{{ $value['name'] }}
+                @if ($value['roomStatus'] == 1)
+                    <label class="btn btn-default" disabled> My Room</label>
+                @endif
+              </h3>
+
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -59,15 +64,23 @@
             </div>
             <div class="box-footer no-padding">
                 <p style="padding-left:20px;">Created By ( {{ $value['user']->name }} )</p>
-                @if ($value['status'] == 1)
-                  <div class="">
-                    <p align="right" style="padding-right:30px;">
-                       <a class="btn btn-danger" href="{{ route('unJoinRoom' , ['id_room' => $value['id_room']])}}">Unjoin</a>
-                      <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
-                    </p>
-                  </div>
+                @if ($value['roomStatus'] == 0)
+
+                  @if ($value['status'] == 1)
+                    <div class="">
+                      <p align="right" style="padding-right:30px;">
+                        <a class="btn btn-danger" href="{{ route('unJoinRoom' , ['id_room' => $value['id_room']])}}">Unjoin</a>
+                        <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
+                      </p>
+                    </div>
+                  @else
+                    <p align="right" style="padding-right:30px;"> <a class="btn btn-primary" href="{{ route('joinRoom' , ['id_room' => $value['id_room']])}}">Join</a> </p>
+                  @endif
+
                 @else
-                  <p align="right" style="padding-right:30px;"> <a class="btn btn-primary" href="{{ route('joinRoom' , ['id_room' => $value['id_room']])}}">Join</a> </p>
+                  <p align="right" style="padding-right:30px;">
+                    <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
+                  </p>
                 @endif
             </div>
           </div>

@@ -12,7 +12,7 @@
 
       <!-- /.box-header -->
       <!-- form start -->
-      <form role="form" method="post" action="{{ route('postItem' , ['id_room' => $room_id])}}">
+      <form role="form" method="post" action="{{ route('postItem' , ['id_room' => $room_id])}}" enctype="multipart/form-data">
 
         {{ csrf_field() }}
 
@@ -26,7 +26,7 @@
             <label for="exampleInputEmail1">Image Item</label>
             <input type="file" name="item_pic" autocomplete="off" required>
           </div>
-          
+
           <div class="form-group">
             <button type="submit" style="float:right;" class="btn btn-primary" name="button"> Create Item </button>
           </div>

@@ -7,7 +7,7 @@
      <div class="box box-primary">
 
       <div class="box-header with-border">
-        <h3 class="box-title">Rooms By ( )</h3>
+        <h3 class="box-title"></h3>
       </div>
 
         <div class="box-body">
@@ -55,7 +55,9 @@
 
             </div>
 
-            <a style="float:right" class="btn btn-primary" href="{{ route('rollItem' , ['id_room' => $value->room_id])}}"> Roll Item Now</a>
+            @if ($status == 1)
+              <a style="float:right" class="btn btn-primary" href="{{ route('rollItem' , ['id_room' => $value->room_id])}}"> Roll Item Now</a>
+            @endif
           @endforeach
 
         </div>

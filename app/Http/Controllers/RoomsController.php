@@ -30,7 +30,6 @@ class RoomsController extends Controller
 
     public function index()
     {
-      // get rooms datas
       $rooms =  $this->rooms->with('user:id,name' , 'category:id,name,img')
                             ->orderBy('created_at' , 'DESC')
                             ->get();
@@ -43,12 +42,17 @@ class RoomsController extends Controller
                                               ->orderBy('created_at' , 'DESC')
                                               ->get();
 
+        $checkRooms = $this->rooms->where('user_id' , Auth::user()->id)->get();
         $checkParticipants = $this->participant->where(['room_id' => $value->id , 'user_id' => Auth::user()->id])->get();
         $status = 0;
-
+        $roomStatus = 0;
 
         if (sizeOf($checkParticipants) > 0) {
           $status = 1;
+        }
+
+        if (sizeOf($checkRooms)) {
+          $roomStatus = 1;
         }
 
         $result[] = [ 'id_room' => $value->id,
@@ -59,7 +63,8 @@ class RoomsController extends Controller
                       'category' => $value->category,
                       'category_img' => $value->category->img,
                       'participant' => $findParticipants,
-                      'status' => $status];
+                      'status' => $status ,
+                      'roomStatus' => $roomStatus];
 
 
       }
@@ -91,7 +96,7 @@ class RoomsController extends Controller
       $start_at = date('d-m-Y H:i:s',$startDate);
 
 
-      $endDate = strtotime(substr($request->input('daterange') , 15));
+      $endDate = strtotime(substr($request->input('daterange') , 16));
       $end_at = date('d-m-Y H:i:s',$endDate);
 
       $rooms = new Rooms();
@@ -109,23 +114,20 @@ class RoomsController extends Controller
     public function createItem(Request $request , String $room_id)
     {
       $user_id = Auth::user()->id;
-      $image = '';
 
-      if ($request->file('item_pic')) {
-        $file = $request->file('item_pic');
-        $image = Auth::user()->name.'_'.'giveaway'.'.'.$image->getClientOriginalExtension();
-        $file->move('items' , $image);
-      }
+      $file = $request->file('item_pic');
+      $image = Auth::user()->name.'_'.'giveaway'.'.'.$file->getClientOriginalExtension();
+      $file->move('items' , $image);
 
 
       $item = new Item();
       $item->room_id = $room_id;
       $item->name = $request->input('item');
       $item->item_picture = $image;
+      $item->status = 1;
       $item->save();
 
       return redirect()->route('rooms');
-
     }
 
     public function joinRoom(String $room_id)
@@ -165,8 +167,19 @@ class RoomsController extends Controller
 
       $room = $this->rooms->with('user:id,name' , 'category:id,name,img')->where('id' , $room_id)->get();
       $item = $this->item->where('room_id' , $room_id)->get();
+      $participantList = $this->participant->getParticipantList($room_id);
 
-      return view('rooms.viewroom' , compact('room' , 'item'));
+      $status = 0;
+
+      foreach ($room as $key => $value) {
+        if ($value->user_id == $user_id) {
+          if (sizeOf($participantList) >= 1) {
+            $status = 1;
+          }
+        }
+      }
+
+      return view('rooms.viewroom' , compact('room' , 'item' , 'status'));
     }
 
     public function rollItem(String $room_id)
@@ -177,15 +190,15 @@ class RoomsController extends Controller
       $participantRandom = [];
 
       foreach ($participantList as $key => $value) {
-        $participantRandom[]= [ $value->name ];
+        $participantRandom[]= [$value->name];
       }
 
-      $winner = $participantRandom[array_rand($participantRandom)];
+      dd($itemList);
+      // foreach ($itemList as $key => $value) {
+      // }
 
-      // $itemList->status = 1;
-      // $itemList->update();
-
-      return $winner;
+      // $winner = $participantRandom[array_rand($participantRandom)];
+      // return $winner;
     }
 
 

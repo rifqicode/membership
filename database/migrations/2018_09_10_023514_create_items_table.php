@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('name');
             $table->string('item_picture');
             $table->string('status');
+            $table->string('winner')->nullable();
 
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
 

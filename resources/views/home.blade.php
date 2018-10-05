@@ -117,7 +117,7 @@
                             </div>
                            @endforeach
 
-                            <input class="form-control input-sm comment" id="reset"  onchange="creatingComments({{ $key->id }},this)" type="text" placeholder="Type a comment">
+                            <input class="form-control input-sm comment" id="reset" autocomplete="off" onchange="creatingComments({{ $key->id }},this)" type="text" placeholder="Type a comment">
                             <br>
                         </div>
                      @endif
