@@ -3,6 +3,7 @@
 /public/storage
 /public/posting
 /public/category
+/public/items
 /storage/*.key
 /vendor
 /.idea

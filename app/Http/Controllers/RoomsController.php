@@ -134,7 +134,8 @@ class RoomsController extends Controller
       $item->room_id = $room_id;
       $item->name = $request->input('item');
       $item->item_picture = $image;
-      $item->status = 1;
+      // status 0 = belum diroll / status 1 = sudah diroll
+      $item->status = 0;
       $item->save();
 
       return redirect()->route('rooms');
@@ -157,7 +158,7 @@ class RoomsController extends Controller
         return redirect()->route('rooms');
       }
 
-      return redirect()->route('rooms');
+        return redirect()->route('rooms');
 
     }
 
@@ -177,8 +178,8 @@ class RoomsController extends Controller
 
       $room = $this->rooms->with('user:id,name' , 'category:id,name,img')->where('id' , $room_id)->get();
       $item = $this->item->where('room_id' , $room_id)->get();
-      $participantList = $this->participant->getParticipantList($room_id);
 
+      $participantList = $this->participant->getParticipantList($room_id);
       $status = 0;
       $roomStatus = 0;
 

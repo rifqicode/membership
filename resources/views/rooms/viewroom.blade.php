@@ -68,7 +68,8 @@
             @elseif ($roomStatus == 1)
               <a style="float:right" id="roll" class="btn btn-danger" > Already Rolled</a>
             @endif
-          @endforeach
+            
+            @endforeach
 
         </div>
 
