@@ -37,15 +37,24 @@ class RoomsController extends Controller
       $result = [];
 
       foreach ($rooms as $key => $value) {
-        $findParticipants = $this->participant->where('room_id' , $value->id)
+        $findParticipants = $this->participant->with('user:id,name')
+                                              ->where('room_id' , $value->id)
                                               ->limit(5)
                                               ->orderBy('created_at' , 'DESC')
                                               ->get();
 
+
+        $itemList = $this->item->where(['room_id' => $value->id , 'status' => 2])->get();
         $checkRooms = $this->rooms->where('user_id' , Auth::user()->id)->get();
         $checkParticipants = $this->participant->where(['room_id' => $value->id , 'user_id' => Auth::user()->id])->get();
+
         $status = 0;
         $roomStatus = 0;
+        $rolled = 0;
+
+        if (sizeOf($itemList) >= 1) {
+          $rolled = 1;
+        }
 
         if (sizeOf($checkParticipants) > 0) {
           $status = 1;
@@ -64,7 +73,8 @@ class RoomsController extends Controller
                       'category_img' => $value->category->img,
                       'participant' => $findParticipants,
                       'status' => $status ,
-                      'roomStatus' => $roomStatus];
+                      'roomStatus' => $roomStatus ,
+                      'rolled' => $rolled];
 
 
       }
@@ -170,6 +180,13 @@ class RoomsController extends Controller
       $participantList = $this->participant->getParticipantList($room_id);
 
       $status = 0;
+      $roomStatus = 0;
+
+      foreach ($item as $key => $value) {
+        if ($value->winner && $value->status == 2) {
+          $roomStatus = 1;
+        }
+      }
 
       foreach ($room as $key => $value) {
         if ($value->user_id == $user_id) {
@@ -179,27 +196,33 @@ class RoomsController extends Controller
         }
       }
 
-      return view('rooms.viewroom' , compact('room' , 'item' , 'status'));
+      return view('rooms.viewroom' , compact('room' , 'item' , 'status' , 'room_id' , 'roomStatus'));
     }
 
     public function rollItem(String $room_id)
     {
-      $itemList = $this->item->where('room_id' , $room_id);
+      $itemList = $this->item->where('room_id' , $room_id)->get();
       $participantList = $this->participant->getParticipantList($room_id);
 
       $participantRandom = [];
 
       foreach ($participantList as $key => $value) {
-        $participantRandom[]= [$value->name];
+        $participantRandom[]= $value->name;
       }
 
-      dd($itemList);
-      // foreach ($itemList as $key => $value) {
-      // }
+      $winner = array();
+      foreach ($itemList as $key => $value) {
+        $winner = ['id_item' => $value->id  , 'room_id' => $room_id , 'item' => $value->name , 'winner' => $participantRandom[array_rand($participantRandom)] ];
+      }
 
-      // $winner = $participantRandom[array_rand($participantRandom)];
-      // return $winner;
+      if (is_array($winner)) {
+        $items = $this->item->find($winner['id_item']);
+        $items->status = 2;
+        $items->winner = $winner['winner'];
+        $items->update();
+      }
+
+      return json_encode($winner);
+
     }
-
-
 }

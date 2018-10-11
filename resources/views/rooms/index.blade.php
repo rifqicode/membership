@@ -48,7 +48,7 @@
               <div class="row">
                 <div class="col-md-8">
                   <div>
-                      <img src="{{ asset("/category" .'/'. $value['category_img'] ."")}}" height="130" width="200" alt="Category Img">
+                      <img src="{{ asset("/category" .'/'. $value['category_img'] ."")}}" height="130" width="250" alt="Category Img">
                   </div>
                 </div>
 
@@ -56,7 +56,7 @@
                   <p>Participant</p>
                   <ul class="chart-legend clearfix">
                     @foreach ($value['participant'] as $key => $value2)
-                      <li><i class="fa fa-circle-o text-red"></i> {{ $value2->user_id}} </li>
+                      <li><i class="fa fa-circle-o text-red"></i> {{ $value2->user->name}} </li>
                     @endforeach
                   </ul>
                 </div>
@@ -64,7 +64,8 @@
             </div>
             <div class="box-footer no-padding">
                 <p style="padding-left:20px;">Created By ( {{ $value['user']->name }} )</p>
-                @if ($value['roomStatus'] == 0)
+                <p></p>
+                @if ($value['roomStatus'] == 0 && $value['rolled'] == 0)
 
                   @if ($value['status'] == 1)
                     <div class="">
@@ -73,13 +74,19 @@
                         <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
                       </p>
                     </div>
+
                   @else
                     <p align="right" style="padding-right:30px;"> <a class="btn btn-primary" href="{{ route('joinRoom' , ['id_room' => $value['id_room']])}}">Join</a> </p>
                   @endif
 
-                @else
+                @elseif ($value['roomStatus'] == 1 && $value['rolled'] == 0)
                   <p align="right" style="padding-right:30px;">
                     <a class="btn btn-primary" href="{{ route('viewRoom' , ['id_room' => $value['id_room']])}}">View</a>
+                  </p>
+
+                @elseif ($value['rolled'] == 1)
+                  <p align="right" style="padding-right:30px;">
+                    <a class="btn btn-danger" disabled>Rooms Is Over</a>
                   </p>
                 @endif
             </div>

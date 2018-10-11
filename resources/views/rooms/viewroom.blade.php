@@ -12,6 +12,8 @@
 
         <div class="box-body">
 
+          <input type="hidden" id="room_id" value="{{ $room_id }}">
+
           <h3 class="box-title"> Rooms Detail </h3><br>
           @foreach ($room as $key => $value)
             <div class="col-md-12">
@@ -45,18 +47,26 @@
                 <thead>
                   <tr bgcolor="#b3d9ff">
                     <td>Name</td>
+                    @if ($value->status == 2)
+                      <td>Winner</td>
+                    @endif
                   </tr>
                 </thead>
 
                 <tbody>
                   <td> <p>{{ $value->name }}</p> </td>
+                  @if ($value->status == 2)
+                    <td> <p>{{ $value->winner }}</p> </td>
+                  @endif
                 </tbody>
               </table>
 
             </div>
 
-            @if ($status == 1)
-              <a style="float:right" class="btn btn-primary" href="{{ route('rollItem' , ['id_room' => $value->room_id])}}"> Roll Item Now</a>
+            @if ($status == 1 && $roomStatus == 0)
+              <a style="float:right" id="roll" class="btn btn-primary" > Roll Item Now</a>
+            @elseif ($roomStatus == 1)
+              <a style="float:right" id="roll" class="btn btn-danger" > Already Rolled</a>
             @endif
           @endforeach
 
@@ -69,5 +79,38 @@
    <!-- /.content -->
 
  </div>
+
+@push('scripts')
+    <script>
+
+        $("#roll").click(function(){
+
+          var room_id = $('#room_id').val();
+
+          var url = '/rooms/roll/' + room_id + '/item/now';
+
+          $.ajaxSetup({
+            headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+          });
+
+          $.ajax({
+            url: url,
+            type: "GET",
+            success: function( msg ) {
+              var data = JSON.parse(msg);
+              sweetAlert('Winner' , data.winner , 'success' , 'OK')
+            },
+            error: function ( err ){
+              console.log(err);
+            }
+          });
+        //
+        });
+
+    </script>
+
+@endpush
 
 @endsection

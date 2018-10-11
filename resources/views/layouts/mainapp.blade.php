@@ -87,7 +87,8 @@
     <script src="{{ asset('/js/app.min.js')}}"></script>
     <script src="{{ asset('/js/dataTables.min.js')}}"></script>
 
-    <!-- Setting active sidebar -->
+    {{-- Sweet Alert --}}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script type="text/javascript">
 
@@ -107,7 +108,25 @@
         format: 'M/DD hh:mm A'
       }
     });
+
+
+
+    function sweetAlert(title , text , icon , buttontext) {
+
+      swal({
+        title: title,
+        text: text,
+        icon: icon,
+        button: buttontext,
+      }).then((value) => {
+        location.reload();
+      });
+
+    }
+
     </script>
+
+    @stack('scripts')
 
 </body>
 </html>
