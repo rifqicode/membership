@@ -1,11 +1,6 @@
 <?php
 
-$url = parse_url(getenv("DATABASE_URL"));
-
-$host = $url["host"];
-$username = $url["user"];
-$password = $url["pass"];
-$database = substr($url["path"], 1);
+$DATABASE_URL = parse_url("postgres://gcmtvugdlpfrzj:8ecaf265221b4146d3e5e187ba93703c978125182b5b1eca1271492b3a67436a@ec2-54-235-247-209.compute-1.amazonaws.com:5432/d4murttfk69chh");
 
 return [
 
@@ -20,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'pgsql'),
+    'default' => env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -61,16 +56,18 @@ return [
             'engine' => null,
         ],
 
-        'pgsql' => array(
-          'driver'   => 'pgsql',
-          'host'     => $host,
-          'database' => $database,
-          'username' => $username,
-          'password' => $password,
-          'charset'  => 'utf8',
-          'prefix'   => '',
-          'schema'   => 'public',
-        ),
+        'pgsql' => [
+              'driver' => 'pgsql',
+              'host' => $DATABASE_URL["host"],
+              'port' => $DATABASE_URL["port"],
+              'database' => ltrim($DATABASE_URL["path"], "/"),
+              'username' => $DATABASE_URL["user"],
+              'password' => $DATABASE_URL["pass"],
+              'charset' => 'utf8',
+              'prefix' => '',
+              'schema' => 'public',
+              'sslmode' => 'require',
+          ],
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
